@@ -67,7 +67,7 @@ public class Motorphfinalcodems2 {
       
     private static void loadEmployeeData() {
         //read csv file for employee data
-        String csvFile = "src/motorph_employee_data_complete.csv";
+        String csvFile = System.getProperty("user.dir") + "/terminalassessment/motorph_employee_data_complete.csv";;
         try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
             // Skip header and capture needed columns
             br.readLine(); 
@@ -98,7 +98,7 @@ public class Motorphfinalcodems2 {
         
     private static void loadAttendanceData() {
         //read csv file for attendance
-        String csvFile = "src/attendance_record.csv";
+        String csvFile = System.getProperty("user.dir") + "/terminalassessment/attendance_record.csv";;
         try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
             // Skip header
             br.readLine(); 
