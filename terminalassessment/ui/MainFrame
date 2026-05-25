@@ -1,0 +1,114 @@
+package motorphfinalcodems2;
+
+import javax.swing.*;
+import java.awt.*;
+
+public class MainFrame extends JFrame {
+
+    private JButton employeeButton;
+    private JButton hoursButton;
+    private JButton grossButton;
+    private JButton netButton;
+    private JButton exitButton;
+
+    private JTextArea outputArea;
+
+    public MainFrame() {
+        setTitle("MotorPH Payroll System");
+        setSize(850, 550);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new GridLayout(5, 1, 10, 10));
+        buttonPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+
+        employeeButton = new JButton("Display Employee Info");
+        hoursButton = new JButton("Compute Hours Worked");
+        grossButton = new JButton("Compute Gross Salary");
+        netButton = new JButton("Compute Net Salary");
+        exitButton = new JButton("Exit");
+
+        buttonPanel.add(employeeButton);
+        buttonPanel.add(hoursButton);
+        buttonPanel.add(grossButton);
+        buttonPanel.add(netButton);
+        buttonPanel.add(exitButton);
+
+        outputArea = new JTextArea();
+        outputArea.setEditable(false);
+        outputArea.setFont(new Font("Monospaced", Font.PLAIN, 14));
+        outputArea.setMargin(new Insets(15, 15, 15, 15));
+
+        JScrollPane scrollPane = new JScrollPane(outputArea);
+
+        JLabel titleLabel = new JLabel("MotorPH Payroll System", SwingConstants.CENTER);
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        titleLabel.setBorder(BorderFactory.createEmptyBorder(15, 10, 15, 10));
+
+        add(titleLabel, BorderLayout.NORTH);
+        add(buttonPanel, BorderLayout.WEST);
+        add(scrollPane, BorderLayout.CENTER);
+
+        employeeButton.addActionListener(e -> {
+            String empNumber = JOptionPane.showInputDialog(this, "Enter Employee Number:");
+
+            if (empNumber != null && !empNumber.trim().isEmpty()) {
+                String result = Motorphfinalcodems2.displayEmployeeInfo(empNumber.trim());
+                outputArea.setText(result);
+            }
+        });
+
+        hoursButton.addActionListener(e -> {
+            String empNumber = JOptionPane.showInputDialog(this, "Enter Employee Number:");
+            String startDate = JOptionPane.showInputDialog(this, "Enter Start Date MM/dd/yyyy:");
+            String endDate = JOptionPane.showInputDialog(this, "Enter End Date MM/dd/yyyy:");
+
+            if (empNumber != null && startDate != null && endDate != null) {
+                String result = Motorphfinalcodems2.computeHoursWorked(
+                        empNumber.trim(),
+                        startDate.trim(),
+                        endDate.trim()
+                );
+
+                outputArea.setText(result);
+            }
+        });
+
+        grossButton.addActionListener(e -> {
+            String empNumber = JOptionPane.showInputDialog(this, "Enter Employee Number:");
+            String startDate = JOptionPane.showInputDialog(this, "Enter Start Date MM/dd/yyyy:");
+            String endDate = JOptionPane.showInputDialog(this, "Enter End Date MM/dd/yyyy:");
+
+            if (empNumber != null && startDate != null && endDate != null) {
+                String result = Motorphfinalcodems2.computeGrossSalary(
+                        empNumber.trim(),
+                        startDate.trim(),
+                        endDate.trim()
+                );
+
+                outputArea.setText(result);
+            }
+        });
+
+        netButton.addActionListener(e -> {
+            String empNumber = JOptionPane.showInputDialog(this, "Enter Employee Number:");
+
+            if (empNumber != null && !empNumber.trim().isEmpty()) {
+                String result = Motorphfinalcodems2.computeNetSalary(empNumber.trim());
+                outputArea.setText(result);
+            }
+        });
+
+        exitButton.addActionListener(e -> System.exit(0));
+
+        setVisible(true);
+    }
+
+    public static void main(String[] args) {
+        Motorphfinalcodems2.loadEmployeeData();
+        Motorphfinalcodems2.loadAttendanceData();
+
+        new MainFrame();
+    }
+}
